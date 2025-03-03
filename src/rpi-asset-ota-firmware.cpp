@@ -65,16 +65,13 @@ void handleAssets(spark::Vector<ApplicationAsset> assets)
 
 void setup()
 {
-  // redo assets handling on next boot for demo purposes
-  // This is just here to make it easier to see the early log messages on
-  // the USB serial debug. You probably don't want this in production code.
   Serial.begin(115200);
   waitFor(Serial.isConnected, 10000);
   delay(2000);
 
-  // This handles the assets. You can use the STARTUP method above, instead, but
-  // when using STARTUP it's harder to see the debug log messages because they
-  // occur too early.
+  // redo assets handling on next boot for demo purposes
+  // This is just here to make it easier to see the early log messages on
+  // the USB serial debug. You probably don't want this in production code.
   handleAssets(System.assetsAvailable());
 }
 
