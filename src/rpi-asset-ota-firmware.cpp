@@ -1,9 +1,7 @@
 /*
- * Project myProject
- * Author: Your Name
- * Date:
- * For comprehensive documentation and examples, please visit:
- * https://docs.particle.io/firmware/best-practices/firmware-template/
+ * Project rpi-asset-ota-firmware
+ * Author: Eric Pietrowicz
+ * Date: 2025-03-04
  */
 
 // Include Particle Device OS APIs
@@ -12,7 +10,6 @@
 // Let Device OS manage the connection to the Particle Cloud
 SYSTEM_MODE(AUTOMATIC);
 
-// Run the application and system concurrently in separate threads
 // PRODUCT_VERSION(1);
 
 void handleAssets(spark::Vector<ApplicationAsset> assets);
@@ -40,7 +37,7 @@ void handleAssets(spark::Vector<ApplicationAsset> assets)
       char buffer[BUFFER_SIZE];
 
       // Print a header to serial
-      Serial.printlnf("--- Begin %s (size: %d bytes) ---", asset.name().c_str(), asset.size());
+      Serial1.printlnf("--- Begin %s (size: %d bytes) ---", asset.name().c_str(), asset.size());
 
       // Read and send data in chunks
       while (asset.available() > 0)
@@ -49,12 +46,12 @@ void handleAssets(spark::Vector<ApplicationAsset> assets)
         if (bytesRead > 0)
         {
           // Write directly to serial
-          Serial.write((const uint8_t *)buffer, bytesRead);
+          Serial1.write((const uint8_t *)buffer, bytesRead);
         }
       }
 
       // Print a footer to serial
-      Serial.println("\n--- End of file ---");
+      Serial1.println("\n--- End of file ---");
 
       // Add a small delay to ensure the data has been sent
       delay(100);
@@ -65,9 +62,12 @@ void handleAssets(spark::Vector<ApplicationAsset> assets)
 
 void setup()
 {
-  Serial.begin(115200);
-  waitFor(Serial.isConnected, 10000);
+  Serial1.begin(115200);
   delay(2000);
+
+  Serial1.println("Starting asset OTA firmware example...");
+  Log.info("Starting asset OTA firmware example...");
+  // waitFor(Serial.isConnected, 10000);
 
   // redo assets handling on next boot for demo purposes
   // This is just here to make it easier to see the early log messages on
@@ -77,4 +77,7 @@ void setup()
 
 void loop()
 {
+  Log.info("Running main loop...");
+  Serial1.println("Running main loop...");
+  delay(5000);
 }
