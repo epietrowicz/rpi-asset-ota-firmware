@@ -10,8 +10,6 @@
 // Let Device OS manage the connection to the Particle Cloud
 SYSTEM_MODE(AUTOMATIC);
 
-// PRODUCT_VERSION(1);
-
 void handleAssets(spark::Vector<ApplicationAsset> assets);
 STARTUP(System.onAssetOta(handleAssets));
 
@@ -67,7 +65,6 @@ void setup()
 
   Serial1.println("Starting asset OTA firmware example...");
   Log.info("Starting asset OTA firmware example...");
-  // waitFor(Serial.isConnected, 10000);
 
   // redo assets handling on next boot for demo purposes
   // This is just here to make it easier to see the early log messages on
@@ -77,7 +74,4 @@ void setup()
 
 void loop()
 {
-  Log.info("Running main loop...");
-  Serial1.println("Running main loop...");
-  delay(5000);
 }
